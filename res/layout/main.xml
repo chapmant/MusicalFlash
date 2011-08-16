@@ -3,10 +3,11 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
+    android:gravity="center"
+    android:background="#002B36">
+    <TextView android:text="@string/start" 
     android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    android:layout_width="wrap_content" 
+    android:id="@+id/tCard" 
+    android:textAppearance="?android:attr/textAppearanceLarge" android:textSize="90dp" android:textColor="#657b83"></TextView>
 </LinearLayout>

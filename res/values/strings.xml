@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, MusicalFlashActivity!</string>
     <string name="app_name">MusicalFlash</string>
+    <string name="start">START</string>
 </resources>
