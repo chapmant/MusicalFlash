@@ -35,21 +35,32 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
     protected ArrayList<String> setScalesList() {
     	ArrayList<String> list = new ArrayList<String>();
     	
-    	list.add("1st of C");
-    	list.add("C");
-    	list.add("2nd of C");
-    	list.add("D");
-    	list.add("3rd of C");
-    	list.add("E");
-    	list.add("4th of C");
-    	list.add("F");
-    	list.add("5th of C");
-    	list.add("G");
-    	list.add("6th of C");
-    	list.add("A");
-    	list.add("7th of C");
-    	list.add("B");
+    	String[] notes      = {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
+    	String[] majorSharp = {"C", "G", "D", "A", "E", "B", "F#", "C#", "G#"};
+    	int[]    steps      = {0, 2, 2, 1, 2, 2, 2};
     	
+    	for (String scale : majorSharp) {
+    		int count =  0;
+    		int loc   = -1;
+    		int len   = notes.length;
+    		
+    		for (int i = 0; i < len; ++i) {
+    			if (scale.compareTo(notes[i]) > 0) {
+    				loc = i;
+    				break;
+    			}
+    		}
+    		
+    		for (int i = 0; i < 7; ++i) {
+    			if (count == steps[i]) {
+    				list.add("Note " + i+1 + " of " + scale);
+    				list.add(notes[loc % len]);
+    				count = 0;
+    			}
+    			++count;
+    			++loc;
+    		}
+    	}
     	
     	return list;
     }
