@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:background="#002B36">
+    android:background="#002B36"
+    android:id="@+id/tBack">
     <TextView android:text="@string/start" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 

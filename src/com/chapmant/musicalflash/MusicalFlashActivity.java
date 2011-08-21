@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MusicalFlashActivity extends Activity implements OnClickListener {
     /** Called when the activity is first created. */
 	TextView tCard;
+	LinearLayout tBack;
 	ArrayList<String> scalesList;
 	
 	private String[] sharpNotes     = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
@@ -43,6 +45,10 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
         
         tCard = (TextView) findViewById(R.id.tCard);
         tCard.setOnClickListener(this);
+        
+        tBack = (LinearLayout) findViewById(R.id.tBack);
+        tBack.setOnClickListener(this);
+        
         System.out.println("Done");
     }
 
