@@ -8,28 +8,44 @@ import java.util.Random;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MusicalFlashActivity extends Activity implements OnClickListener {
     /** Called when the activity is first created. */
 	TextView tCard;
 	ArrayList<String> scalesList;
-	boolean question = false;
-	int location;
+	
+	private String[] sharpNotes     = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+	private String[] flatNotes      = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
+	private int[]    sharpMajScales = {0, 7, 2, 9, 4, 11, 6, 1, 8};
+	private int[]    flatsMajScales = {0, 5, 10, 3, 8, 1, 6, 11, 4};
+	private boolean  question = false;
+	private String   answer;
+	private int      location;
+	private int		 key;
+	private int      num;
+	private int      accents; // 1 if flat, 0 if sharp
+	
+	private Random randomGen = new Random();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         setContentView(R.layout.main);
-        System.out.println("Setting scale list");
-        scalesList = setScalesList();
+        //System.out.println("Setting scale list");
+        //scalesList = setScalesList();
         System.out.println("Setting view and listener");
         
         tCard = (TextView) findViewById(R.id.tCard);
         tCard.setOnClickListener(this);
         System.out.println("Done");
-        
     }
     
     protected ArrayList<String> setScalesList() {
@@ -67,29 +83,37 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		int size;
+		key     = randomGen.nextInt(9);
+		num     = randomGen.nextInt(7);
+		accents = randomGen.nextInt(2);
+		
+		int[] scale = {};
+		Chord note;
+		String[] notes = {};
+		
+		if (accents == 0) {
+			scale = sharpMajScales;
+			notes = sharpNotes;
+		}
+		else if (accents == 1) {
+			scale = flatsMajScales;
+			notes = flatNotes;
+		}
+		
 		System.out.println("On click");
 		if (question) {
 			question = false;
-			System.out.println("Question true");
-			tCard.setText(scalesList.remove(location * 2));
+			tCard.setText(answer);
 		}
 		else {
-			System.out.println("Question false");
 			question = true;
-			size = scalesList.size();
-			System.out.println(scalesList);
-			if (size == 0) {
-				tCard.setText("Press to reset!");
-				question = false;
-				scalesList = setScalesList();
-				return;
-			}
-			System.out.println("Getting new location");
-			location = new Random().nextInt(size / 2);
-			System.out.println("Removing from list");
-			tCard.setText(scalesList.remove(location * 2));
-			System.out.println("Done");
+			note = new Chord(scale[key], num, "maj");
+			System.out.println("Setting answer");
+			System.out.println(accents + " " + num + " " + scale[key]);
+			System.out.println(note.getChord());
+			answer = notes[note.getChord()[0]];
+			tCard.setText("Note " + (num+1) + " in key " + notes[scale[key]]);
+			
 		}
 			
 	}

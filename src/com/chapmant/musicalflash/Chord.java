@@ -32,15 +32,15 @@ public class Chord {
 	}
 	
 	public Chord(int key, int note, String type) {
-		int[] scaleType;
+		int[] scaleType = {};
 		if (type.equals("maj"))
 			scaleType = majorCount;
 		else if (type.equals("min"))
 			scaleType = minorCount;
-		else
-			return;
 		
-		finalChord[0] = finalChord[1] = finalChord[2] = key + scaleType[note] % 12;
+		finalChord[0] = finalChord[1] = finalChord[2] = (key + scaleType[note]) % 12;
+		System.out.println((key+scaleType[note]));
+		System.out.println(finalChord[0]);
 	}
 	
 	public int[] getChord() {
