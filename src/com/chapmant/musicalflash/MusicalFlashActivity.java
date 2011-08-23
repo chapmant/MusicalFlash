@@ -15,11 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MusicalFlashActivity extends Activity implements OnClickListener {
-    /** Called when the activity is first created. */
+    // Set up the variables for the layout
 	TextView tCard;
 	LinearLayout tBack;
 	ArrayList<String> scalesList;
 	
+	// All the variables to do the musical-math
 	private String[]  sharpNotes     = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
 	private String[]  flatNotes      = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
 	private int[]     sharpMajScales = {0, 7, 2, 9, 4, 11, 6, 1, 8};
@@ -33,19 +34,21 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
 	private int       num            = 0;
 	private int       accents; // 1 if flat, 0 if sharp
 	
-	private Random randomGen = new Random();
-	
-	
+	// Since we use this three times per click, probably better to allocate only one, new isn't free!
+	private Random randomGen = new Random();	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        // Makes sure the used array is full of zeroes
         resetUsed();
         
+        // Set the window to have no title, and fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
+        // Select the view, and assign the variables and listeners
         setContentView(R.layout.main);
         System.out.println("Setting view and listener");
         
@@ -78,6 +81,7 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
     }
     
     private String getEnding(int number) {
+    	// Returns the approrpiate ending to a number, ie "1st, 2nd..."
     	if (number == 1)
     		return "st";
     	else if (number == 2)
@@ -99,6 +103,7 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
 		// If the question has been posed, display the answer on this click
 		if (question) {
 			question = false;
+			// Answer is saved in the else block from earlier
 			tCard.setText(answer);
 		}
 		else {
@@ -114,10 +119,12 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
 			used[key][num][accents] = 1;
 			++count;
 			
+			// Generic variables, assigned to a global later
 			int[] scale = {};
 			Chord note;
 			String[] notes = {};
 			
+			// Decide if we're doing a sharp or flat scale
 			if (accents == 0) {
 				scale = sharpMajScales;
 				notes = sharpNotes;
@@ -127,13 +134,17 @@ public class MusicalFlashActivity extends Activity implements OnClickListener {
 				notes = flatNotes;
 			}
 			
+			// Mark that we're presenting a question card
 			question = true;
+			
+			// Generate the chord, and save the answer for the next click
 			note = new Chord(scale[key], num, "maj");
 			System.out.println("Setting answer");
 			System.out.println(accents + " " + num + " " + scale[key]);
 			System.out.println(note.getChord());
 			answer = notes[note.getChord()[0]];
 	        
+			// Display the question on screen
 			tCard.setText("Note " + (num+1) + " in key " + notes[scale[key]]);
 			
 		}
