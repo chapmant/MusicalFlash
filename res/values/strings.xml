@@ -3,4 +3,6 @@
     <string name="hello">Hello World, MusicalFlashActivity!</string>
     <string name="app_name">MusicalFlash</string>
     <string name="start">START</string>
+    <string name="chords">CHORDS</string>
+    <string name="scales">SCALES</string>
 </resources>
